@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Ajax</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:panelGrid columns="2">
+                
+                <h:outputLabel value="Pais" />
+                <h:selectOneMenu id="pais" value="#{cuidadBean.codPais}">
+                    <f:selectItem itemLabel="MEXICO" itemValue="1"/>
+                    <f:selectItem itemLabel="PERU" itemValue="2"/>        
+                    <f:ajax event="change" listener="#{cuidadBean.cargarCuidades}" render="cboCuidad" execute="@this" />
+                </h:selectOneMenu>
+                
+                <h:outputLabel value="Ciudad" />
+                <h:selectOneMenu id="cboCuidad" value="#{cuidadBean.codCiudad}">                    
+                    <f:selectItems value="#{cuidadBean.listaCuidad}" />
+                </h:selectOneMenu>
+                
+                <!-- con primefaces -->
+                <p:outputLabel value="Pais" />
+                <p:selectOneMenu id="paisPrime" value="#{cuidadBean.codPais}">
+                    <f:selectItem itemLabel="Seleccione" itemValue="0" noSelectionOption="true"/>
+                    <f:selectItem itemLabel="MEXICO" itemValue="1"/>
+                    <f:selectItem itemLabel="PERU" itemValue="2"/>        
+                    <p:ajax event="change" listener="#{cuidadBean.cargarCuidadPrime}" update="cboCuidadPrime" />
+                </p:selectOneMenu>
+                
+                <p:outputLabel value="Ciudad" />
+                <p:selectOneMenu id="cboCuidadPrime" value="#{cuidadBean.codCiudad}">                    
+                    <f:selectItems value="#{cuidadBean.listaCuidad}" />
+                </p:selectOneMenu>
+                
+                <p:outputLabel value="Perros" />
+                <p:selectOneMenu id="cboPerros" value="#{perroBean.perro.codigo}">
+                    <f:selectItem itemLabel="No hay datos" noSelectionOption="false" />
+                    <f:selectItems value="#{perroBean.listaPerro}" var="pr" 
+                                   itemLabel="#{pr.nombre}" itemValue="#{pr.codigo}" />
+                </p:selectOneMenu>
+                
+                <p:commandButton value="Cargar Perros" action="#{perroBean.refrescar()}" update="cboPerros" />
+                
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>
